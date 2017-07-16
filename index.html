@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title>Calculator</title>
+    <link href="main.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Simple Calculator</h1>
+    <div class="wrapper">
+        <div class="total" id="total"></div>
+        <div class="hist" id="history">
+            <div id="displayHist"></div>
+            <button class="clearHist" id="clearHist">Clear History</button>
+        </div>
+        <div id="calc" class="calcContainer">
+            <button class="calcButton" id="clear">C</button>
+            <button class="calcButton" id="histButton">Hist</button>
+            <button class="calcButton operator" id="sqrRoot">√</button>
+            <button class="calcButton operator" value="%">mod</button>
+            <button class="calcButton" value="7">7</button>
+            <button class="calcButton" value="8">8</button>
+            <button class="calcButton" value="9">9</button>
+            <button class="calcButton operator" id="div" value="/">/</button>
+            <button class="calcButton" value="4">4</button>
+            <button class="calcButton" value="5">5</button>
+            <button class="calcButton" value="6">6</button>
+            <button class="calcButton operator" id="mult" value="*">*</button>
+            <button class="calcButton" value="1">1</button>
+            <button class="calcButton" value="2">2</button>
+            <button class="calcButton" value="3">3</button>
+            <button class="calcButton operator" id="minus" value="-">-</button>
+            <button class="calcButton" value="0">0</button>
+            <button class="calcButton" id="decimalPoint" value=".">.</button>
+            <button class="calcButton" id="equals" value="=">=</button>
+            <button class="calcButton operator" id="addition" value="+">+</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
