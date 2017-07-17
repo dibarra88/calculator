@@ -11,8 +11,8 @@ function enableButtons(enable) {
             if (!enable) {
                 if (buttons[i].id !== "clearHist") {
                     buttons[i].disabled = true;
-                   // buttons[i].style.backgroundColor = "#BFBFBF";
-                   buttons[i].style.opacity = "0.5";
+                    // buttons[i].style.backgroundColor = "#BFBFBF";
+                    buttons[i].style.opacity = "0.5";
                 }
             }
             else {
@@ -120,16 +120,20 @@ function calculateFunc() {
         i1 = expArray.findIndex(function (a) { return a === "+" });
         i2 = expArray.findIndex(function (a) { return a === "-" });
         //Addition
-        if (((i1 < i2 && i1 !== -1) || (i2 === -1)) && (i1 !== i2)) {
-            let addValue = parseFloat(expArray[i1 - 1]) + parseFloat(expArray[i1 + 1]);
-            expArray.splice(i1 - 1, 3, addValue);
-            continue;
+        if (i1 !== -1) {
+            if ((i2 === -1) || (i1 < i2)) {
+                let addValue = parseFloat(expArray[i1 - 1]) + parseFloat(expArray[i1 + 1]);
+                expArray.splice(i1 - 1, 3, addValue);
+                continue;
+            }
         }
         //Subtraction
-        if (((i2 < i1 && i2 !== -1) || (i1 === -1)) && (i1 !== i2)) {
-            let subValue = parseFloat(expArray[i2 - 1]) - parseFloat(expArray[i2 + 1]);
-            expArray.splice(i2 - 1, 3, subValue);
-            continue;
+        if (i2 !== -1) {
+            if ((i1 === -1) || (i2 < i1)) {
+                let subValue = parseFloat(expArray[i2 - 1]) - parseFloat(expArray[i2 + 1]);
+                expArray.splice(i2 - 1, 3, subValue);
+                continue;
+            }
         }
     }
     document.getElementById("total").innerHTML = expArray[0];
