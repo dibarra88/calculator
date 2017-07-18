@@ -2,7 +2,8 @@ let expression = [];
 let lastOperator = "";
 let isNewDecimal = true;
 let newExp = false;
-
+let display = document.getElementById("total");
+let displayHistory = document.getElementById("displayHist");
 
 function enableButtons(enable) {
     var buttons = document.getElementsByTagName("button");
@@ -23,7 +24,7 @@ function enableButtons(enable) {
     }
 }
 function clear() {
-    document.getElementById("total").innerHTML = "";
+    display.innerHTML = "";
     expression = [];
     lastOperator = "";
     isNewDecimal = true;
@@ -38,7 +39,7 @@ function showHistory() {
     }
 }
 function parseExp() {
-    let temp = document.getElementById("total").innerHTML;
+    let temp = display.innerHTML;
     let copy = temp;
     let finalArray = [];
     let negativeNum = false;
@@ -77,7 +78,7 @@ function parseExp() {
 }
 function calculateFunc() {
     //display on history window
-    document.getElementById("displayHist").innerHTML += document.getElementById("total").innerHTML + " = ";
+    displayHistory.innerHTML += display.innerHTML + " = ";
     // Parentheses, Exponents, Multiplication, Division, Addition, Subtraction. 
     let expArray = parseExp();
     let i1 = 0;
@@ -136,8 +137,8 @@ function calculateFunc() {
             }
         }
     }
-    document.getElementById("total").innerHTML = expArray[0];
-    document.getElementById("displayHist").innerHTML += expArray[0] + "<br /><br />";
+    display.innerHTML = expArray[0];
+    displayHistory.innerHTML += expArray[0] + "<br /><br />";
     //IF RESULT IS INFINITY OR NaN 
     if (expArray[0] === Infinity || expArray[0] === -Infinity || expArray[0] === NaN) {
         enableButtons(false);
@@ -146,14 +147,14 @@ function calculateFunc() {
 }
 function calcSquareRoot() {
 
-    let tempValue = document.getElementById("total").innerHTML;
+    let tempValue = display.innerHTML;
     if (tempValue.length > 1) {
         tempValue = calculateFunc();
     }
     let result = Math.sqrt(tempValue);
-    document.getElementById("displayHist").innerHTML += "√" + document.getElementById("total").innerHTML + " = ";
-    document.getElementById("total").innerHTML = result;
-    document.getElementById("displayHist").innerHTML += result + "<br /><br />";
+    displayHistory.innerHTML += "√" + display.innerHTML + " = ";
+    display.innerHTML = result;
+    displayHistory.innerHTML += result + "<br /><br />";
     //IF RESULT IS INFINITY OR NaN 
     if (result === Infinity || result === -Infinity || result === NaN) {
         enableButtons(false);
@@ -185,7 +186,7 @@ function islastItemOperand() {
     let lastItem = expression[expression.length - 1];
     if (isOperand(lastItem)) {
         operand = true;
-        document.getElementById("total").innerHTML = 'ERROR';
+        display.innerHTML = 'ERROR';
         enableButtons(false);
     }
     return operand;
@@ -195,15 +196,15 @@ function enterOperand(newOperand) {
         let tmpValue = expression[expression.length - 1];
         //check if last item is a operand
         if (isOperand(tmpValue) === false) {       //if last item is a num enter operand
-            document.getElementById("total").innerHTML += newOperand;
+            display.innerHTML += newOperand;
             expression.push(newOperand);
             isNewDecimal = true;
         }
         else {                                                   //if new operand is not the same as current
             if (tmpValue !== newOperand && isDecimal(newOperand) === false) {
-                let str = document.getElementById("total").innerHTML;
-                document.getElementById("total").innerHTML = str.slice(0, -1);      //remove old operand
-                document.getElementById("total").innerHTML += newOperand;           //add new
+                let str = display.innerHTML;
+                display.innerHTML = str.slice(0, -1);      //remove old operand
+                display.innerHTML += newOperand;           //add new
                 expression.pop();
                 expression.push(newOperand);                                        //add to array
                 isNewDecimal = true;
@@ -214,7 +215,7 @@ function enterOperand(newOperand) {
 function enterDecimal() {
     //if starting the expression with a decimal point
     if (expression.length === 0) {
-        document.getElementById("total").innerHTML += "0.";
+        display.innerHTML += "0.";
         expression.push("0");
         expression.push(".");
         isNewDecimal = false;
@@ -224,13 +225,13 @@ function enterDecimal() {
         let tmp = expression[expression.length - 1];
         if (isDecimal(tmp) === false) {
             if (isOperand(tmp)) {
-                document.getElementById("total").innerHTML += "0.";
+                display.innerHTML += "0.";
                 expression.push("0");
                 expression.push(".");
                 isNewDecimal = false;
             }
             else if (isNewDecimal) {
-                document.getElementById("total").innerHTML += ".";
+                display.innerHTML += ".";
                 expression.push(".");
                 isNewDecimal = false;
             }
@@ -249,7 +250,7 @@ document.getElementById('calc').addEventListener('click', function (e) {
             }
             if (isFirstItemOperand(target.value) === false) {              //check if the first item is an operand
                 if (isOperand(target.value) === false && isDecimal(target.value) === false) {         //if item is num then add to the string/array
-                    document.getElementById("total").innerHTML += target.value;
+                    display.innerHTML += target.value;
                     expression.push(target.value);
                 }
                 else if (isDecimal(target.value)) {
@@ -265,13 +266,13 @@ document.getElementById('calc').addEventListener('click', function (e) {
             clear();
         }
         if (target.id === "equals") {
-            if (islastItemOperand() === false && document.getElementById("total").innerHTML !== "") {
+            if (islastItemOperand() === false && display.innerHTML !== "") {
                 newExp = true;
                 calculateFunc();
             }
         }
         if (target.id === "sqrRoot") {
-            if (islastItemOperand() === false && document.getElementById("total").innerHTML !== "") {
+            if (islastItemOperand() === false && display.innerHTML !== "") {
                 newExp = true;
                 calcSquareRoot();
             }
@@ -284,5 +285,5 @@ document.getElementById('calc').addEventListener('click', function (e) {
 document.getElementById('clearHist').addEventListener('click', function (e) {
     e.preventDefault()
     var target = e.target;
-    document.getElementById("displayHist").innerHTML = "";
+    displayHistory.innerHTML = "";
 })
